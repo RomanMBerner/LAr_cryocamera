@@ -1,1 +1,1 @@
-python temp_readout_only.py &> /dev/null &
+python temp_readout.py &> /dev/null &
