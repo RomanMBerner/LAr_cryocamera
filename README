@@ -1,0 +1,28 @@
+Software to read a PT100 temperature sensor mounted
+on the chip of a cryocamera.
+In the script 'cryocamera.py' you can define the
+temerature at which the cryocamera should be operated.
+If the actual temperature is lower than this defined
+temperature, one of the GPIO pins will apply 3.3V to
+a FET which then will allow a current from the
+Raspberry Pi power supply to flow through a resistor
+chain within the camera case to heat it up.
+
+To run the cryocamera, you need to install motion:
+sudo apt-get install motion
+
+copy the file motion.conf to /etc/motion/motion.conf
+streaming port is defined as 8081.
+
+To start/stop motion:
+sudo (service) motion start
+sudo (service) motion stop
+
+NOTE:
+The camera is heating up when acquiring images.
+Since the thermal insulation is quite good,
+
+# /////////////////////////////////////////////// #
+# NEVER USE THE CAMERA AT ROOM TEMPERATURE.	   	  #
+# ONLY USE THE CAMERA IN CRYOGENIC SURROUNDINGS.  #
+# /////////////////////////////////////////////// #
