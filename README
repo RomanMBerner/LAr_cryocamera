@@ -15,8 +15,8 @@ copy the file motion.conf to /etc/motion/motion.conf
 streaming port is defined as 8081.
 
 To start/stop motion:
-sudo (service) motion start
-sudo (service) motion stop
+sudo motion start
+sudo service motion stop
 
 NOTE:
 The camera is heating up when acquiring images.
