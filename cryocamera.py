@@ -9,7 +9,7 @@
 # NOTE: NEVER USE THE CAMERA AT ROOM TEMPERATURE   //
 # BUT ONLY AT CRYOGENIC TEMPERATURES.              //
 #                                                  //
-# Last modifications: 21.01.2019 by R.Berner       //
+# Last modifications: 07.02.2019 by R.Berner       //
 #                                                  //
 # //////////////////////////////////////////////// //
 
@@ -34,15 +34,17 @@ if __name__ == "__main__":
         tempC = sens.readTemp()
 
         # Define the temperature range to operate the camera
-        upper_temp = -5.
-        lower_temp = -6.
+        upper_temp = -10.
+        lower_temp = -20.
         print "Lower temp: %.2f C" % lower_temp
         print "Upper temp: %.2f C" % upper_temp
 
         # Define temperatures at which motion is started (will introduce additional heat into the camera case)
         # and at which it must be stopped in order to prevent the camera to overheat.
         temp_motion_start = -70.
-        temp_motion_stop  =  35.
+        temp_motion_stop  =  40.
+
+        motion_is_not_running = 1
 
         # First few temp. measurements could be incorrect
         for i in range (0,10):
@@ -62,15 +64,18 @@ if __name__ == "__main__":
         # Start motion and stream to port 8081 (defined in /etc/motion/motion.conf)
         tempC = sens.readTemp()
         if tempC > temp_motion_start:
-            os.system("sudo motion start")
-            print "Started motion"
+            if motion_is_not_running:
+                os.system("sudo motion start &> /dev/null &")
+                print "Started motion"
+                motion_is_not_running = 0
 
         heating = 1
 
         while 1:
             time.sleep(1.)
             tempC = sens.readTemp()
-
+            os.system("sudo motion start &> /dev/null &")
+            
             if tempC < lower_temp:
                 sens.heatOn()
                 print "Heating ON"
@@ -88,25 +93,18 @@ if __name__ == "__main__":
                 if heating == 1: print "Heating ON"
                 print "Current temperature: %.2f" % tempC
 
-            # To prevent overheating
-            # TO DO: The command to stop motion does not yet work
             while tempC > temp_motion_stop:
                 print "CAMERA IS TOO HOT!"
                 print "Current temperature: %.2f" % tempC
                 print "Stop motion"
-                os.system("sudo service motion stop")
-                #os.system("sudo motion stop")
-                #os.system("sudo systemctl motion stop")
-                #os.system("sudo reboot now")
+                os.system("sudo service motion restart &> /dev/null &")
+                os.system("sudo service motion stop &> /dev/null &")
                 sens.heatOff()
                 heating = 0
                 tempC = sens.readTemp()
                 print "Heating and motion OFF"
                 print "Current temperature: %.2f" % tempC
                 time.sleep(1.)
-                if tempC < temp_motion_stop:
-                    os.system("sudo motion start")
-                    print "Started motion"
-                    break
+                motion_is_not_running = 1
 
 	GPIO.cleanup()
