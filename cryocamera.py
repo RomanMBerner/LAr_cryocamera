@@ -82,6 +82,11 @@ if __name__ == "__main__":
                 print "Motion STOP"
 
             print "Current temperature: %.2f" % tempC
+            try:
+                os.system("scp /tmp/motion/cryostat/*snapshot.jpg lhep@130.92.139.15:/home/lhep/Desktop/cryostat/")
+                os.system("sudo rm /tmp/motion/cryostat/*snapshot.jpg &> /dev/null")
+            except:
+                pass
 
     except KeyboardInterrupt:
 
