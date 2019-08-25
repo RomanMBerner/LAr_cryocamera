@@ -11,7 +11,7 @@ chain within the camera case to heat it up.
 To run the cryocamera, you need to install motion:
 sudo apt-get install motion
 
-copy the file motion.conf to /etc/motion/motion.conf
+copy the file motion.conf to /etc/motion/motion.conf.bak
 streaming port is defined as 8081.
 
 To start/stop motion:
