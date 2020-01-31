@@ -8,7 +8,7 @@
 # NOTE: NEVER USE THE CAMERA AT ROOM TEMPERATURE   //
 # BUT ONLY AT CRYOGENIC TEMPERATURES.              //
 #                                                  //
-# Last modifications: 18.01.2019 by R.Berner       //
+# Last modifications: 19.01.2019 by R.Berner       //
 #                                                  //
 # //////////////////////////////////////////////// //
 
