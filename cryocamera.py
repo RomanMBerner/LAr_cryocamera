@@ -1,6 +1,6 @@
 # //////////////////////////////////////////////// //
 #                                                  //
-# python script to read the PT100 temperature      //
+# python2 script to read the PT100 temperature     //
 # sensor on the chip of the cryocamera.            //
 # This script allows for setting a lower and an    //
 # upper temperature, which will be set using a     //
